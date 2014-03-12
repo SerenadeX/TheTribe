@@ -5,15 +5,18 @@ app = express().http().io()
 
 config.resolve (render, PORT, PUBLICDIR, VIEWDIR) ->
   
-  #Parse body and cookies
-  app.use express.bodyParser()
-  app.use express.cookieParser()
-
-  #Set the PUBLICDIR for our static files
-  app.use express.static PUBLICDIR
 
   app.configure ->
     
+    #Parse body and cookies
+    app.use express.bodyParser()
+    app.use express.cookieParser()
+
+    #Set the PUBLICDIR for our static files
+    app.use(express.static(PUBLICDIR))
+
+
+
     # Error handling
     app.use (err, req, res, next) ->
       console.log err.stack
@@ -24,7 +27,12 @@ config.resolve (render, PORT, PUBLICDIR, VIEWDIR) ->
     app.set "view engine", "jade"
 
     # All routes go below
-    app.io.route "openme", render.socketTest
+
+    # Socket routes
+    # app.io.route "openme", render.socketTest
+
+    # Service routes
+    
 
     # Default route
     app.get "*", render.index
