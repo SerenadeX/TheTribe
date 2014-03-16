@@ -32,7 +32,7 @@ config.resolve (render, PORT, PUBLICDIR, VIEWDIR) ->
     # app.io.route "openme", render.socketTest
 
     # Service routes
-    
+    app.post "/user/register", users.register
 
     # Default route
     app.get "*", render.index
