@@ -34,19 +34,20 @@ module.exports = (db) ->
   }
 
 
-  PersonSchema.statics.encryptPassword = (password) ->
+  PersonSchema.methods.encryptPassword = (password) ->
     @salt = crypto.randomBytes(128).toString "base64"
-    @hash = md5 password+@salt
+    md5 = crypto.createHash "md5"
+    md5.update password+@salt
+    @hash = md5.digest "hex"
     
-  PersonSchema.statics.isValidPassword = (password) ->
-    hash = md5 password+@salt
+  PersonSchema.methods.isValidPassword = (password) ->
+    md5 = crypto.createHash "md5"
+    md5.update password+@salt
+    hash = md5.digest "hex"
     hash is @hash
 
 
 
 
   Person = db.model "Person", PersonSchema
-  Person.pre "save", (next) ->
-    
-
-  return Person
+  

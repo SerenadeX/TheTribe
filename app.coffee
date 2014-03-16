@@ -1,5 +1,7 @@
 config = require './config'
 express = require 'express.io'
+redis = require 'redis'
+RedisStore = require('connect-redis')(express.session)
 passport = require 'passport'
 LocalStrategy = require("passport-local").Strategy
 
@@ -19,6 +21,8 @@ config.resolve (render, users, Person, PORT, PUBLICDIR, VIEWDIR) ->
     app.use(express.static(PUBLICDIR))
 
 
+    # app.use(app.router)
+    app.use(express.logger());
 
     # Error handling
     app.use (err, req, res, next) ->
@@ -79,6 +83,8 @@ config.resolve (render, users, Person, PORT, PUBLICDIR, VIEWDIR) ->
 
 
     # Default route
+    app.get "/partials/:name", render.partials
+    app.get "/", render.index
     app.get "*", render.index
 
     app.listen PORT, ->

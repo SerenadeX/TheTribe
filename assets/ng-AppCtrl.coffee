@@ -1,0 +1,2 @@
+@AppCtrl = ($scope, $location, $http) ->
+  

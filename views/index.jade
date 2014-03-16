@@ -1,4 +1,5 @@
-html
+html(ng-app="theTribe")
   head
-  script(src="/socket.io/socket.io.js")
-  body
+    include partials/includes
+  body(ng-view)
+    
