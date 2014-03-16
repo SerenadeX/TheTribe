@@ -21,4 +21,8 @@ module.exports = (db) ->
     likes: [{userId: ObjectId}]
   }
 
+  PostSchema.index {userId: 1}
+  PostSchema.index {type: 1}
+  
+
   Post = db.model "Post", PostSchema

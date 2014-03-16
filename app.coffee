@@ -3,7 +3,7 @@ express = require 'express.io'
 app = express().http().io()
 
 
-config.resolve (render, PORT, PUBLICDIR, VIEWDIR) ->
+config.resolve (render, users, PORT, PUBLICDIR, VIEWDIR) ->
   
 
   app.configure ->

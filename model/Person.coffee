@@ -6,7 +6,12 @@ module.exports = (db) ->
 
   RelationSchema = new Schema {
     type: String
-    id: ObjectId
+    userId: ObjectId
+  }
+
+  HistorySchema = new Schema {
+    type: String  #post object type
+    postId: ObjectId  #Id of the post object 
   }
 
 
@@ -15,7 +20,13 @@ module.exports = (db) ->
       first:      String
       last:       String
     }
+    oauth: {
+      facebook:   Array
+      google:     Array
+      twitter:    Array
+    }
     relations:    [RelationSchema]
+    history:      [HistorySchema]
     email:        String
   }
 
