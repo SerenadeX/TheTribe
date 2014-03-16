@@ -1,9 +1,12 @@
 config = require './config'
 express = require 'express.io'
+passport = require 'passport'
+LocalStrategy = require("passport-local").Strategy
+
 app = express().http().io()
 
 
-config.resolve (render, users, PORT, PUBLICDIR, VIEWDIR) ->
+config.resolve (render, users, Person, PORT, PUBLICDIR, VIEWDIR) ->
   
 
   app.configure ->
@@ -26,6 +29,40 @@ config.resolve (render, users, PORT, PUBLICDIR, VIEWDIR) ->
     app.set "views", VIEWDIR 
     app.set "view engine", "jade"
 
+    # Persist user login
+    app.use express.session {
+      secret: "totalapp"
+      store: new RedisStore
+      cookie: {
+        maxAge: new Date(Date.now() + 360000)
+        secure: false
+      }
+    }
+
+
+    # Passport Strategies
+    passport.use new LocalStrategy {
+      usernameField: "email"
+      passwordField: "password"
+    }, (email, password, done) ->
+      Person.findOne {email: email}, (err, user) ->
+        return done(err) if err
+        unless user
+          done null, false, {message: "Incorrect email."}
+        unless user.isValidPassword password
+          done null, false, {message: "Incorrect password."}
+        done null, user
+
+    passport.serializeUser (user, callback) ->
+      callback null, user._id
+    
+    passport.deserializeUser (id, callback) ->
+      Person.findById id, (err, user) ->
+        callback err, user
+      
+
+
+
     # All routes go below
 
     # Socket routes
@@ -35,7 +72,9 @@ config.resolve (render, users, PORT, PUBLICDIR, VIEWDIR) ->
 
     # User Routes
     app.post "/register", users.register
-    app.post "/login", users.login
+    app.post "/login", passport.authenticate(), users.login
+
+
 
 
 
