@@ -7,7 +7,7 @@
   "$routeProvider"
   "$locationProvider"
   ($routeProvider, $locationProvider) ->
-    $routeProvider.when "/home", {templateUrl: "/partials/home"}
+    $routeProvider.when "/", {templateUrl: "/partials/home"}
     $routeProvider.when "/login", {templateUrl: "/partials/login"}
     $routeProvider.when "/register", {templateUrl: "/partials/register"}
     $locationProvider.html5Mode true

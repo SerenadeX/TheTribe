@@ -1,5 +1,6 @@
 html(ng-app="theTribe")
   head
     include partials/includes
-  body(ng-view)
-    
+  body(ng-controller="AppCtrl")
+    include partials/menu
+    .container(ng-view)    

@@ -1,0 +1,9 @@
+body {
+  background: $light-tan;
+}
+
+input {
+  &:before {
+    clear:both;
+  }
+}

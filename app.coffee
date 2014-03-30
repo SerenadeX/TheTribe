@@ -38,7 +38,7 @@ config.resolve (render, users, Person, PORT, PUBLICDIR, VIEWDIR) ->
       secret: "totalapp"
       store: new RedisStore
       cookie: {
-        maxAge: new Date(Date.now() + 360000)
+        maxAge: Date.now() + 360000
         secure: false
       }
     }
@@ -77,7 +77,9 @@ config.resolve (render, users, Person, PORT, PUBLICDIR, VIEWDIR) ->
     # User Routes
     app.post "/register", users.register
     app.post "/login", passport.authenticate(), users.login
-
+    app.get "/user", (req, res, next) ->
+      return res.send req.user if req.user
+      next 500
 
 
 

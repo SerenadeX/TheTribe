@@ -1,0 +1,4 @@
+.login(ng-controller="LoginCtrl")
+  input.email(type="email", ng-model="login.email", placeholder="someone@something.com")
+  input.password(type="password", ng-model="login.password", placeholder="Password")
+  button.submit.btn.btn-primary(ng-click="login()") Login

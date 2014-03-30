@@ -1,2 +1,24 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway:400,100);
+body {
+  background: #fff5d1; }
+
 input:before {
   clear: both; }
+
+.menu {
+  background: #a8b9a9;
+  height: 83px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 84.72%; }
+  .menu > div {
+    width: 167px;
+    height: 100%;
+    float: left;
+    font-family: Raleway;
+    font-weight: 100;
+    text-align: center;
+    font-size: 1.8em;
+    padding-top: 1.9%; }
+    .menu > div.logout {
+      float: right; }
